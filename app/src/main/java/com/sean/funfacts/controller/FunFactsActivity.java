@@ -1,5 +1,8 @@
-package com.sean.funfacts;
+package com.sean.funfacts.controller;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -9,6 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.sean.funfacts.R;
+import com.sean.funfacts.model.MasterDataObject;
 
 
 public class FunFactsActivity extends ActionBarActivity {
@@ -23,16 +29,31 @@ public class FunFactsActivity extends ActionBarActivity {
         final RelativeLayout factsLayout = (RelativeLayout) findViewById(R.id.factLayout);
         final TextView factLabel = (TextView)findViewById(R.id.factTextView);
         final Button showFactButton = (Button)findViewById(R.id.showFactButton);
+        //final ColorWheel mColorWheel = new ColorWheel();
+        //final FactBook facts = new FactBook();
+        final MasterDataObject mMasterDataObject = new MasterDataObject();
 
         showFactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ColorWheel mColorWheel = new ColorWheel();
-                int color = mColorWheel.getColor();
+                ConnectivityManager connMgr = (ConnectivityManager)
+                        getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                if (networkInfo != null && networkInfo.isConnected()) {
+                     //facts.updateFact();
+                     factLabel.setText(mMasterDataObject.getFact());
+                     int color = mMasterDataObject.getColor();
+                     factsLayout.setBackgroundColor(color);
+                     showFactButton.setTextColor(color);
+
+                } else {
+                     factLabel.setText("No network connection available.");
+                }
+
+                /*int color = mColorWheel.getColor();
                 factsLayout.setBackgroundColor(color);
                 showFactButton.setTextColor(color);
-                FactBook facts = new FactBook();
-                factLabel.setText(facts.getFact());
+                factLabel.setText(facts.getFact());*/
             }
         });
         //Toast.makeText(this, "Toast example", Toast.LENGTH_LONG).show();

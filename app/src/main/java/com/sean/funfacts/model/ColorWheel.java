@@ -1,4 +1,4 @@
-package com.sean.funfacts;
+package com.sean.funfacts.model;
 
 import android.graphics.Color;
 
