@@ -6,8 +6,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -25,12 +23,9 @@ public class FunFactsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fun_facts);
 
-        //declare view variables
         final RelativeLayout factsLayout = (RelativeLayout) findViewById(R.id.factLayout);
         final TextView factLabel = (TextView)findViewById(R.id.factTextView);
         final Button showFactButton = (Button)findViewById(R.id.showFactButton);
-        //final ColorWheel mColorWheel = new ColorWheel();
-        //final FactBook facts = new FactBook();
         final MasterDataObject mMasterDataObject = new MasterDataObject();
 
         showFactButton.setOnClickListener(new View.OnClickListener() {
@@ -40,46 +35,17 @@ public class FunFactsActivity extends ActionBarActivity {
                         getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                 if (networkInfo != null && networkInfo.isConnected()) {
-                     //facts.updateFact();
                      factLabel.setText(mMasterDataObject.getFact());
                      int color = mMasterDataObject.getColor();
                      factsLayout.setBackgroundColor(color);
                      showFactButton.setTextColor(color);
 
                 } else {
-                     factLabel.setText("No network connection available.");
+                     factLabel.setText("0 is the number of facts we can get you without a " +
+                             "network connection!");
                 }
-
-                /*int color = mColorWheel.getColor();
-                factsLayout.setBackgroundColor(color);
-                showFactButton.setTextColor(color);
-                factLabel.setText(facts.getFact());*/
             }
         });
-        //Toast.makeText(this, "Toast example", Toast.LENGTH_LONG).show();
         Log.i(TAG, "Activity Started");
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_fun_facts, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

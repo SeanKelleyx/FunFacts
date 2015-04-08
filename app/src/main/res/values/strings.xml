@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FunFacts</string>
+    <string name="app_name">Number Facts</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

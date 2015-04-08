@@ -21,8 +21,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Press the button to start reading fun facts!"
+        android:text="Press the button to start reading fun facts about numbers!"
         android:id="@+id/factTextView"
+        android:freezesText="true"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -32,7 +33,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Show Another Fun Fact"
+        android:text="Show Another Fact"
         android:textColor="#ff51b46d"
         android:id="@+id/showFactButton"
         android:layout_alignParentBottom="true"
