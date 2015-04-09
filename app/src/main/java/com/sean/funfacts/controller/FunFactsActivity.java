@@ -1,6 +1,7 @@
 package com.sean.funfacts.controller;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ import com.sean.funfacts.model.MasterDataObject;
 
 public class FunFactsActivity extends ActionBarActivity {
     public static final String TAG = FunFactsActivity.class.getSimpleName();
-    private int mColor;
+    private int mColor = Color.parseColor("#51b46d");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
