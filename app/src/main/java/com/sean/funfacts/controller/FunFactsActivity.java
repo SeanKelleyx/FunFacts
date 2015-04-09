@@ -32,6 +32,7 @@ public class FunFactsActivity extends ActionBarActivity {
         if (savedInstanceState != null){
             mColor = savedInstanceState.getInt("color");
             factsLayout.setBackgroundColor(mColor);
+            showFactButton.setTextColor(mColor);
         }
 
         showFactButton.setOnClickListener(new View.OnClickListener() {
