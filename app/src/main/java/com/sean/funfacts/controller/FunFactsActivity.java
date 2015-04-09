@@ -17,6 +17,7 @@ import com.sean.funfacts.model.MasterDataObject;
 
 public class FunFactsActivity extends ActionBarActivity {
     public static final String TAG = FunFactsActivity.class.getSimpleName();
+    private int mColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,11 @@ public class FunFactsActivity extends ActionBarActivity {
         final Button showFactButton = (Button)findViewById(R.id.showFactButton);
         final MasterDataObject mMasterDataObject = new MasterDataObject();
 
+        if (savedInstanceState != null){
+            mColor = savedInstanceState.getInt("color");
+            factsLayout.setBackgroundColor(mColor);
+        }
+
         showFactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,9 +42,9 @@ public class FunFactsActivity extends ActionBarActivity {
                 NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                 if (networkInfo != null && networkInfo.isConnected()) {
                      factLabel.setText(mMasterDataObject.getFact());
-                     int color = mMasterDataObject.getColor();
-                     factsLayout.setBackgroundColor(color);
-                     showFactButton.setTextColor(color);
+                     mColor = mMasterDataObject.getColor();
+                     factsLayout.setBackgroundColor(mColor);
+                     showFactButton.setTextColor(mColor);
 
                 } else {
                      factLabel.setText("0 is the number of facts we can get you without a " +
@@ -47,5 +53,11 @@ public class FunFactsActivity extends ActionBarActivity {
             }
         });
         Log.i(TAG, "Activity Started");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("color", mColor);
     }
 }
