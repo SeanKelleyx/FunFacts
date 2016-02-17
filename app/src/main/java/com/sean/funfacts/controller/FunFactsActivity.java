@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.sean.funfacts.AnalyticsApplication;
 import com.sean.funfacts.R;
 import com.sean.funfacts.model.MasterDataObject;
 
@@ -19,11 +22,18 @@ import com.sean.funfacts.model.MasterDataObject;
 public class FunFactsActivity extends ActionBarActivity {
     public static final String TAG = FunFactsActivity.class.getSimpleName();
     private int mColor = Color.parseColor("#51b46d");
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fun_facts);
+
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        mTracker.setScreenName("Home");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         final RelativeLayout factsLayout = (RelativeLayout) findViewById(R.id.factLayout);
         final TextView factLabel = (TextView)findViewById(R.id.factTextView);
@@ -39,6 +49,10 @@ public class FunFactsActivity extends ActionBarActivity {
         showFactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("New Fact")
+                        .build());
                 ConnectivityManager connMgr = (ConnectivityManager)
                         getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
