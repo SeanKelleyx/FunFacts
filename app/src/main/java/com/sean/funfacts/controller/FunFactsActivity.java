@@ -49,8 +49,7 @@ public class FunFactsActivity extends ActionBarActivity {
                      showFactButton.setTextColor(mColor);
 
                 } else {
-                     factLabel.setText("0 is the number of facts we can get you without a " +
-                             "network connection!");
+                     factLabel.setText(R.string.no_network_string);
                 }
             }
         });
