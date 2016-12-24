@@ -1,0 +1,131 @@
+<html>
+<head>
+	<title>Number Facts</title>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+		body{
+			padding: 0 10px;
+		}
+
+		h1{
+		 	color: white;
+		}
+
+		h2{
+			color: rgba(255, 255, 255, 0.5);
+			padding-left: 40px;
+		}
+
+		.actionButton{
+			background-color: white;
+			padding: 10px 5px;
+			font-weight: bold;
+			color: white;
+		}
+
+		.spacer{
+			height: 40px;
+		}
+
+		#header {
+			position: fixed;
+			top: 0;
+			width: 100%;
+		}
+
+		#footer {
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+		}
+
+		#factDiv {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			-webkit-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+		}
+
+		#fact {
+		  color: white;
+		}
+	</style>
+</head>
+<body>
+	<div id="header">
+		<h1>Number Facts!</h1>
+		<h2>Did you know?</h2>
+	</div>
+	<div id="factDiv">
+		<h3 id="fact">Temp fact</h3>
+	</div>
+	<div id="footer">
+		<div id="actions" class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="row text-center">
+					<div class="col-md-4" id="fact_button">
+						<div class="actionButton"> Show another fact</div>
+					</div>
+					<div class="col-md-4" id="tweet_this_button">
+						<div class="actionButton">Tweet this fact</div>
+					</div>
+					<div class="col-md-4" id="get_app_button">
+						<div class="actionButton">Get the Android app</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="spacer"></div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var tweetThisBaseUrl = "https://twitter.com/home?status=";
+			var fact = "";
+			var colors = ["#39add1", "#3079ab", "#c25975", "#e15258", "#f9845b", "#838cc7", "#7d669e", "#53bbb4", "#51b46d", "#e0ab18", "#637a91", "#f092b0", "#b7c0c7"];
+
+			function getRandomNumberFact(){
+				var url = "https://numbersapi.p.mashape.com/random/trivia"
+				$.ajax({
+					type: 'GET',
+					url: url,
+					headers: {
+						'X-Mashape-Key' : 'CiHFiCjhl5mshrH1zhL6seS4aakqp1ReUNpjsnUTnaf4q9B2F4'
+					}
+				}).done(function(data){
+					fact = data;
+					updateFact();
+				});
+			}
+
+			function updateFact(){
+				$( "#fact" ).html(fact);
+				setColor(getRandomColor());
+			}
+
+			function getRandomColor(){
+				return colors[Math.floor(Math.random() * colors.length)];
+			}
+
+			function setColor(color){
+				$("body").css("background", color);
+				$(".actionButton").css("color", color);
+			}
+
+			$("#fact_button").click(function(){
+				getRandomNumberFact();
+			});  
+			$("#tweet_this_button").click(function(){
+				window.open(tweetThisBaseUrl + encodeURIComponent(fact));
+			});
+			$("#get_app_button").click(function(){
+				window.open("https://play.google.com/store/apps/details?id=com.sean.funfacts&hl=en");
+			});
+
+			getRandomNumberFact();
+		});
+	</script>
+</body>
+</html>
